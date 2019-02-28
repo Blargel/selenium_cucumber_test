@@ -20,15 +20,20 @@ Then("The cart will be empty") do
 end
 
 When("We click on the {string} tab in the top menu") do |string|
-  pending # Write code here that turns the phrase above into concrete actions
+  top_menu = driver.find_element(:id, "block_top_menu")
+  top_menu.find_element(:xpath, "//*[text()='#{string}']").click
 end
 
 When("We expand the {string} category in the side menu") do |string|
-  pending # Write code here that turns the phrase above into concrete actions
+  categories = driver.find_element(:id, "categories_block_left")
+  link = categories.find_element(:link_text, string)
+  parent = link.find_element(:xpath, "..")
+  parent.find_element(:class, "grower").click
 end
 
-Then("The page says there are {int} products") do |int|
-  pending # Write code here that turns the phrase above into concrete actions
+Then("The heading counter will say {string}") do |string|
+  heading_counter = driver.find_element(:class, "heading-counter")
+  expect(heading_counter.text).to eq(string)
 end
 
 When("We add one item to the cart") do
