@@ -3,15 +3,20 @@ require 'selenium-webdriver'
 driver = Selenium::WebDriver.for :firefox
 
 Given("We navigate to the homepage") do
-  pending # Write code here that turns the phrase above into concrete actions
+  driver.navigate.to("http://automationpractice.com/index.php")
 end
 
 When("We log in") do
-  pending # Write code here that turns the phrase above into concrete actions
+  driver.find_element(:link_text, "Sign in").click
+
+  driver.find_element(:id, "email").send_keys("LargeBagel@mailinator.com")
+  driver.find_element(:id, "passwd").send_keys("asdfjklsemicolon")
+  driver.find_element(:id, "SubmitLogin").click
 end
 
 Then("The cart will be empty") do
-  pending # Write code here that turns the phrase above into concrete actions
+  cart = driver.find_element(:class, "shopping_cart")
+  expect(cart.text).to eq("Cart (empty)")
 end
 
 When("We click on the {string} tab in the top menu") do |string|
