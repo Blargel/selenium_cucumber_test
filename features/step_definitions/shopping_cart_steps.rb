@@ -70,13 +70,12 @@ When("We add one item to the cart") do
   # Move the mouse over the product container to display "Add to cart" button
   @driver.action.move_to(product).perform
 
+  # Find the "Add to cart" button for the product
+  add_to_cart = product.find_element(:link_text, "Add to cart")
+
   # Wait for the "Add to cart" button to appear
   # It should be near instant, but the test periodically fails without the wait
-  add_to_cart = nil
-  wait_until do
-    add_to_cart = product.find_element(:link_text, "Add to cart")
-    add_to_cart.displayed?
-  end
+  wait_until_displayed(add_to_cart)
 
   # Click the "Add to cart" button
   add_to_cart.click
@@ -84,10 +83,10 @@ end
 
 Then("The post-add-to-cart dialogue box will pop up") do
   # Wait for the layer_cart div to appear
-  wait_until do
-    popup = @driver.find_element(:id, "layer_cart")
-    popup.displayed?
-  end
+  popup = @driver.find_element(:id, "layer_cart")
+
+  # Wait until the div is displayed
+  wait_until_displayed(popup)
 end
 
 Then("The right of the post-add-to-cart dialogue box will say {string}") do |string|
@@ -112,6 +111,11 @@ private
 def wait_until timeout=10, &block
   wait = Selenium::WebDriver::Wait.new(:timeout => timeout)
   wait.until &block
+end
+
+# Convenience method to wait until the given element is displayed
+def wait_until_displayed(element, timeout=10)
+  wait_until(timeout) { element.displayed? }
 end
 
 # Scrolls the element into view
