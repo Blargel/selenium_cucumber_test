@@ -26,7 +26,7 @@ When("We log in") do
 end
 
 Then("The cart will say {string}") do |string|
-  # Select the shopping cart
+  # Find the shopping cart
   cart = @driver.find_element(:class, "shopping_cart")
 
   # Check that the cart has text equal to the input string
@@ -49,7 +49,7 @@ When("We expand the {string} category in the side menu") do |string|
   link = categories.find_element(:link_text, string)
 
   # Find and click the grower, which is a preceding sibling to the link
-  grower = link.find_element(:xpath, "preceding-sibling::span").click
+  link.find_element(:xpath, "preceding-sibling::span").click
 end
 
 Then("The heading counter will say {string}") do |string|
