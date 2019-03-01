@@ -1,7 +1,14 @@
 require 'selenium-webdriver'
 
 Before do
-  @driver = Selenium::WebDriver.for :firefox
+  case ENV["browser"]
+  when nil, "firefox"
+    @driver = Selenium::WebDriver.for :firefox
+  when "chrome"
+    @driver = Selenium::WebDriver.for :chrome
+  else
+    raise "unknown or unsupported browser"
+  end
 end
 
 Given("We navigate to the homepage") do
@@ -95,7 +102,7 @@ Then("The right of the post-add-to-cart dialogue box will say {string}") do |str
 end
 
 After do
-  @driver.quit
+  @driver.quit if @driver
 end
 
 private
