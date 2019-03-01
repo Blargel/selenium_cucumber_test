@@ -9,5 +9,5 @@ Scenario:
   Then The heading counter will say "There are 7 products."
   When We add one item to the cart
   Then The post-add-to-cart dialogue box will pop up
-  And The right of the dialogue box will say "There is 1 item in your cart."
+  And The right of the post-add-to-cart dialogue box will say "There is 1 item in your cart."
   And The cart will say "Cart 1 Product"
